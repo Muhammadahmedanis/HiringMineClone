@@ -6,7 +6,7 @@ import { BsInstagram } from "react-icons/bs";
 import { FaLinkedinIn } from "react-icons/fa";
 function Footer() {
     return(
-        <footer style={{background: "linear-gradient(180deg, #4d3bdb 0%, #9747ff 100%)"}} className="dark:bg-gray-900 mt-3">
+        <footer style={{background: "linear-gradient(180deg, #4d3bdb 0%, #9747ff 100%)"}} className="dark:bg-gray-900 pt-3">
             <div className="w-full max-w-screen-xl mx-auto px-4 md:py-8">
                 <div className="sm:flex sm:items-center sm:justify-between">
                     <div className="pt-4">

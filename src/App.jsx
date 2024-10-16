@@ -1,13 +1,11 @@
 import { } from 'react'
 import './App.css'
-import Home from './components/Home'
+import AppRouter from './Router';
 
 function App() {
 
   return (
-    <>
-      <Home />  
-    </>
+      <AppRouter />
   )
 }
 
