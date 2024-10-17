@@ -11,7 +11,6 @@ function Home() {
         <>
         <Navbar setDark={setDark} />
         <Sections dark={dark} />
-        {/* <Jobs dark={dark} /> */}
         <Footer />
         </>
     )

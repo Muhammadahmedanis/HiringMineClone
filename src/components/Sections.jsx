@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Cards from "./Cards";
-import Jobs from "./Jobs";
 
 function timeElapsed(data){
     const nom = new Date();
@@ -10,10 +9,9 @@ function timeElapsed(data){
     return days;
 }
 
-let a = JSON.parse(localStorage.getItem('theme'));
 function Sections({dark}){
     const [categories, setCategories] = useState([]);
-    const getCategoriesApiCall = async(timing) => {
+    const getCategoriesApiCall = async() => {
         try {
             const res = await fetch('https://backend-prod.app.hiringmine.com/api/categories/all')
             const jobData = await res.json();
@@ -33,7 +31,7 @@ function Sections({dark}){
         try {
             const res = await fetch('https://backend-prod.app.hiringmine.com/api/jobAds/all?limit=10&pageNo=1&keyWord=&category=');
             const jobsData = await res.json();
-            console.log(jobsData.data);
+            // console.log(jobsData.data); ****************
             setJobsData(jobsData.data.slice(0, 6));
         } catch (error) {
             console.log(error);
@@ -46,7 +44,7 @@ function Sections({dark}){
     
 
     return(
-        <div className={`${dark || a ? 'bg-slate-900 text-white' : 'bgImage'} pb-3 pt-20`}>
+        <div className={`${dark ? 'bg-slate-900 text-white' : 'bgImage'} pb-3 pt-20`}>
         <div className="text-center pt-12 pb-4 lg:max-w-[1000px] mx-auto">
            <h1 style={{ background: 'linear-gradient(106.43deg, #522fd4, #6bdcff 95.12%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', fontWeight: '750'}} className="font-normal pb-4 text-5xl lg:text-7xl"> Dig. Apply <div>Prepare Your Future</div> </h1>
 
@@ -97,7 +95,7 @@ function Sections({dark}){
                         <h3 className="text-[40px] font-bold text-center"> <span className="text-[#6851ff]">Countless Career Options</span> Are Waiting For You To Explore </h3>
                     </div>
                 </div>
-                    <div className="flex flex-wrap gap-4 justify-center bgImage2 py-3 my-2">
+                    <div className={`flex flex-wrap gap-4 justify-center ${dark ? dark : 'bgImage2'}  py-3 my-2`}>
                         {
                             categories.slice(0, 8).map((val) => {
                                     return  <Card key={val._id} jobTitle={val.name} totalJobs={val.postCounts} dark={dark} image={'https://www.hiringmine.com/assets/ArtIcon-abc0c65a.svg'} />
@@ -113,7 +111,7 @@ function Sections({dark}){
                         {
                             jobsData.map((val) => {
                                 let time  = timeElapsed(val.updatedAt)
-                                return <Cards  key={val._id} time={time} companyName={val.companyName} views={val.views} designation={val.designation} city={val.city} />
+                                return <Cards key={val._id} time={time} dark={dark} companyName={val.companyName} views={val.views} designation={val.designation} city={val.city} />
                             })
                         }
                     </div>
@@ -131,8 +129,8 @@ const Button = ({title}) => {
 
 function Card({jobTitle, image, totalJobs, dark}) {
     return(
-        <div className={`flex items-center justify-center flex-col min-w-[300px] h-48 p-4 ${dark || a ? 'bg-slate-900 shadow-md shadow-slate-400' : 'bgImage2' } border border-gray-200 rounded-xl dark:bg-gray-800 dark:border-gray-700`}>
-            <img className="text-[rgb(104,81,255)] py-2" src={image} alt="" />
+        <div className={`flex items-center justify-center flex-col min-w-[300px] h-48 p-4 ${dark ? 'bg-slate-900 shadow-md shadow-slate-400' : 'bgImage2' } border border-gray-200 rounded-xl dark:bg-gray-800 dark:border-gray-700`}>
+            <img className="text-[rgb(104,81,255)] py-2 bg-transparent" src={image} alt="" />
             <a href="#">
                 <h5 className="mb-2 text-xl font-bold tracking-tight text-[rgb(104,81,255)] dark:text-white">{jobTitle}</h5>
             </a>
