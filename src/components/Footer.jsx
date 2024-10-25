@@ -29,8 +29,8 @@ function Footer() {
                 </div>
             </div>
                 <hr className="border-gray-200 sm:mx-auto dark:border-gray-700 w-full" />
-                <span className="block text-sm text-white sm:text-center dark:text-gray-400 text-[18px] py-1"> <a className="hover:underline">Privacy Policy</a> Terms & Conditions</span>
-                <span className="block text-sm text-white sm:text-center dark:text-gray-400 text-[17px] pb-2"> Copyright Hiringmine 2024. All Rights Reserved </span>
+                <span className="block text-sm text-white text-center dark:text-gray-400 text-[18px] py-1"> <a className="hover:underline">Privacy Policy</a> Terms & Conditions</span>
+                <span className="block text-sm text-white text-center dark:text-gray-400 text-[17px] pb-2"> Copyright Hiringmine 2024. All Rights Reserved </span>
         </footer>
     )
 }

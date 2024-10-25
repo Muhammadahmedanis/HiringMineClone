@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Cards from "./Cards";
+import axios from 'axios'
 
 function timeElapsed(data){
     const nom = new Date();
@@ -29,10 +30,9 @@ function Sections({dark}){
     const [jobsData, setJobsData] = useState([])
     const jobsApiCall = async() => {
         try {
-            const res = await fetch('https://backend-prod.app.hiringmine.com/api/jobAds/all?limit=10&pageNo=1&keyWord=&category=');
-            const jobsData = await res.json();
-            // console.log(jobsData.data); ****************
-            setJobsData(jobsData.data.slice(0, 6));
+            const res = await axios.get('https://backend-prod.app.hiringmine.com/api/jobAds/all?limit=10&pageNo=1&keyWord=&category=');
+            setJobsData(res.data.data.slice(0, 6));
+            
         } catch (error) {
             console.log(error);
         }
@@ -46,7 +46,7 @@ function Sections({dark}){
     return(
         <div className={`${dark ? 'bg-slate-900 text-white' : 'bgImage'} pb-3 pt-20`}>
         <div className="text-center pt-12 pb-4 lg:max-w-[1000px] mx-auto">
-           <h1 style={{ background: 'linear-gradient(106.43deg, #522fd4, #6bdcff 95.12%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', fontWeight: '750'}} className="font-normal pb-4 text-5xl lg:text-7xl"> Dig. Apply <div>Prepare Your Future</div> </h1>
+           <h1 style={{ background: 'linear-gradient(106.43deg, #522fd4, #6bdcff 95.12%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', fontWeight: '750'}} className="font-normal pb-4 text-4xl lg:text-7xl"> Dig. Apply <div>Prepare Your Future</div> </h1>
 
             <p className="text-[20px] text-center">Hiring Mine connects employer and job seekers, where employers are the source of the resources and the job seeker can find and apply for their targeted job.</p>
 
@@ -84,7 +84,7 @@ function Sections({dark}){
             <div>
                 <img src="https://www.hiringmine.com/assets/art%20work-df4f7a46.png" alt="" />
             </div>
-            <div className={` pt-16`}>
+            <div className='pt-16'>
                 <div className="my-3 mx-auto max-w-screen-lg ">
                     <h3 className="text-5xl font-bold text-center">Find Your Dream Job <span className="text-[#6851ff]">Super Fast Ever</span></h3>
                     <p className="text-xl text-center py-1">We are here to help jobseekers connect with organizer and companies. We are provides the best opportunities to professional people.</p>
@@ -107,7 +107,7 @@ function Sections({dark}){
                     <div className="py-4 my-2">
                         <h3 className="text-5xl font-bold text-center"> <span className="text-[#6851ff]">Latest And Top</span> Job Openings</h3>
                     </div>
-                    <div className="flex flex-wrap gap-3 justify-center py-8">
+                    <div className="flex flex-wrap gap-3 justify-center py-8 px-3">
                         {
                             jobsData.map((val) => {
                                 let time  = timeElapsed(val.updatedAt)

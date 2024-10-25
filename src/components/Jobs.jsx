@@ -136,17 +136,15 @@ function timeElapsed(data){
 
 
 function Jobs({dark}) {
-    console.log(dark);
     
     const[jobsData, setJobsData] = useState([]);
-    const[limit, setLimit] = useState(10);
+    const[keyword, setKeyword] = useState([]);
     
     useEffect(() => {
     const jobsApiCall = async() => {
         try {
-            const res = await fetch(`https://backend-prod.app.hiringmine.com/api/jobAds/all?${limit}=10&pageNo=1&keyWord=&category=`);
+            const res = await fetch(`https://backend-prod.app.hiringmine.com/api/jobAds/all?limit=20&pageNo=1&keyWord${keyword}=&category=`);
             const jobsData = await res.json();
-            // console.log(jobsData.data);
             setJobsData(jobsData.data);
         } catch (error) {
             console.log(error);
@@ -163,7 +161,7 @@ function Jobs({dark}) {
                 jobsData.map((val, id) => {
                     let time = timeElapsed(val.updatedAt);
                     return <Cards dark={dark} a={a}  key={val._id} position={val.position} skills={val.skills} desc={val.category.description} email={val.applyEmail} phone={val.applyPhone} jobType={val.jobType} experience={val.experience} companyName={val.companyName} time={time} views={val.views} designation={val.designation} city={val.city} 
-                    salaryStart={val.payRangeStart} salaryEnd={val.payRangeEnd} width={'600'} /> 
+                    salaryStart={val.payRangeStart} salaryEnd={val.payRangeEnd} width={"600"} /> 
                 })
             }
             
