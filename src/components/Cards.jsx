@@ -2,14 +2,14 @@ import React, { useState } from "react";
 
 function Cards({width, companyName, views, designation, city, salaryStart, salaryEnd, time, position, jobType, experience, desc, email, phone, skills, type}) {
     return(
-        <div style={{ width: width ? `${width}px` : '400px' }}  className={'bg-white flex flex-col gap-5 p-5 bgImage1 b border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700'}>
+        <div style={{ width: width ? `${width}px` : '400px' }}  className={'bg-white flex flex-col gap-5 p-5 light:bgImage1 b border border-gray-200 rounded-lg dark:bg-gray-800 dark:text-white dark:border-gray-700'}>
             <div className="flex-1">
                 <div className="flex justify-between">
-                    <p className="text-[17px] text-[black] font-bold">{companyName ? companyName : 'Anonymous'}</p>
+                    <p className="text-[17px] dark:text-gray-400 text-black font-bold">{companyName ? companyName : 'Anonymous'}</p>
                     <img className="text-[rgb(104,81,255)] h-12" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKnFtZ0QCZX4QjIknoOfHvs5mcRCinDLKkAA&s" alt="" />
                 </div>
                 <div>
-                     <p className="font-semibold text-[16px] text-black">{designation}</p>
+                     <p className="font-semibold text-[16px] dark:text-gray-400 text-black">{designation}</p>
                 </div>
                 <div>
                     <p className="text-[rgb(104,81,255)] font-semibold text-[17px]">{salaryStart && salaryEnd ? salaryStart + '-' + salaryEnd: salaryStart ? salaryStart : 'No Salary Mentioned'}</p>
@@ -20,11 +20,11 @@ function Cards({width, companyName, views, designation, city, salaryStart, salar
             }
             <div className="flex-2">
                 <div>
-                    <p className="font-semibold text-[17px] text-black">{city ? city + ', Pakistan' : 'karachi, Pakistan'}</p>
+                    <p className="font-semibold text-[17px] dark:text-gray-400 text-black">{city ? city + ', Pakistan' : 'karachi, Pakistan'}</p>
                 </div>
                 <div className="flex justify-between">
                     <p className="text-[rgb(104,81,255)] font-semibold text-[16px]">{time ? time : 2} hours ago</p>
-                    <p className="text-black">{views} views</p>
+                    <p className="dark:text-gray-400 text-black">{views} views</p>
                 </div>
             </div>
         </div>
@@ -73,7 +73,7 @@ function JobDetail({ designation, position, jobType, experience, desc, email, ph
                                 <p className="text-left text-[rgb(104,81,255)] font-mono text-[13px] lg:text-[15px]"> <span className="font-bold text-black">Experience: </span> {experience ? experience : 'no experience'}</p>
                                 </div>
                                 
-                                <p className="text-left text-[12px] lg:text-[14px] text-black mt-2"> <span className="font-bold">Job Summary: </span> {desc} </p>
+                                <p className="text-left text-[12px] lg:text-[14px] text-black mt-2 dark:text-gray-400"> <span className="font-bold text-black">Job Summary: </span> {desc} </p>
 
                                 <p className="font-bold text-left my-2 text-[12px] lg:text-[15px] text-black">Skills:</p>
                                 <div className="text-left flex flex-wrap gap-1">
@@ -83,7 +83,7 @@ function JobDetail({ designation, position, jobType, experience, desc, email, ph
                                      })
                                     }
                                 </div>
-                                <p className="text-left my-2 text-black text-[13px] lg:text-[15px]">Share your resume at <b className="text-[rgb(104,81,255)]">{email ? email : '+92' + phone}</b></p>
+                                <p className="text-left my-2 text-black text-[13px] lg:text-[15px]">Share your resume at <b className="text-[rgb(104,81,255)] dark:text-gray-400">{email ? email : '+92' + phone}</b></p>
                                 </div>
                             </div>
                         </div>

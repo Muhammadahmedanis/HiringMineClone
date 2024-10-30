@@ -9,6 +9,7 @@ import FormControl from '@mui/material/FormControl';
 import ListItemText from '@mui/material/ListItemText';
 import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
+import Button from '@mui/material/Button';
 
 function timeElapsed(data){
   const nom = new Date();
@@ -49,14 +50,14 @@ function Jobs() {
   return (
     <>
       <Navbar setKeyword={setKeyword} />
-      <div className='pt-[118px] h-50 flex justify-center'>
+      <div className='pt-[118px] dark:bg-gray-700 h-50 flex justify-center'>
         {
           filters?.map((val) => {
-            return <MultipleSelectCheckmarks key={val._id} filterName={val.filterationName} /> 
+            return <MultipleSelectCheckmarks key={val._id} filterName={val.filterationName} filterOptions={val.filterationOptions} /> 
           })
         }
       </div>
-      <div className={`text-white bg-white flex flex-wrap justify-center gap-4 px-6 p-2 my-6`}>
+      <div className='dark:bg-gray-700 text-white bg-white flex flex-wrap justify-center gap-4 px-6 p-2 py-6'>
         {
             jobsData.data?.map((val) => {
             let time = timeElapsed(val.updatedAt);
@@ -71,48 +72,52 @@ function Jobs() {
 
 export default Jobs;
 
-const ITEM_HEIGHT = 44;
+const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
   PaperProps: {
     style: {
-      maxHeight: ITEM_HEIGHT * 4 + ITEM_PADDING_TOP,
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
       width: 250,
     },
   },
 };
 
-const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
-];
-
-const MultipleSelectCheckmarks = ({filterName}) => {
-const [personName, setPersonName] = React.useState([]);
-console.log(filterName);
-
+const MultipleSelectCheckmarks = ({filterName, filterOptions}) =>  {
+  const [personName, setPersonName] = useState([]);
+  // const[categorys, setCategory] = useState();
+  // console.log(categorys);
+  // useEffect(() => {
+  //   const [a] = personName
+  //   if(!a) return;
+  //     const categoryCall = async() => {
+  //       try {
+  //         console.log(a);
+  //         const res = await axios.get(`https://backend-prod.app.hiringmine.com/api/jobAds/all?limit=10&pageNo=1&category=${a}&keyWord=&category=`)
+  //         console.log(res)
+  //       } catch (error) {
+  //         console.log(error);
+  //       }
+  //     }
+  //     categoryCall();
+  //   }, [personName])
+  
   const handleChange = (event) => {
     const {
-      target: { value },
+      target:{value },
     } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    );
+    const a = value.split(',').map((t) => t);
+    console.log(a);
+    
+    // setPersonName(
+    //   typeof value === 'string' ? value.split(',') : value,
+    // );
   };
-
+  
   return (
     <div>
       <FormControl sx={{ m: 1, width: 160 }}>
-        <InputLabel id="demo-multiple-checkbox-label">{filterName}</InputLabel>
+        <InputLabel className='dark:text-gray-300' id="demo-multiple-checkbox-label">{filterName}</InputLabel>
         <Select
           labelId="demo-multiple-checkbox-label"
           id="demo-multiple-checkbox"
@@ -123,12 +128,15 @@ console.log(filterName);
           renderValue={(selected) => selected.join(', ')}
           MenuProps={MenuProps}
         >
-          {names.map((name) => (
-            <MenuItem key={name} value={name}>
-              <Checkbox checked={personName.includes(name)} />
-              <ListItemText primary={name} />
+          {filterOptions.map((name) => (
+            <MenuItem key={name.title} value={name.title}>
+              <Checkbox checked={personName.includes(name.title)} />
+              <ListItemText primary={name.title} />
             </MenuItem>
           ))}
+          <div className='text-center'>
+            <Button size='small' variant='contained' sx={{backgroundColor: "rgb(104,81,255)", fontWeight: 700, fontSize: '13px'}}>Show results</Button>
+          </div>
         </Select>
       </FormControl>
     </div>

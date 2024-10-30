@@ -44,7 +44,7 @@ function Sections({dark}){
     
 
     return(
-        <div className={`${dark ? 'bg-slate-900 text-white' : 'bgImage'} pb-3 pt-20`}>
+        <div className='dark:bg-slate-700 text-white light:bgImage pb-3 pt-20'>
         <div className="text-center pt-12 pb-4 lg:max-w-[1000px] mx-auto">
            <h1 style={{ background: 'linear-gradient(106.43deg, #522fd4, #6bdcff 95.12%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', fontWeight: '750'}} className="font-normal pb-4 text-4xl lg:text-7xl"> Dig. Apply <div>Prepare Your Future</div> </h1>
 
@@ -95,10 +95,10 @@ function Sections({dark}){
                         <h3 className="text-[40px] font-bold text-center"> <span className="text-[#6851ff]">Countless Career Options</span> Are Waiting For You To Explore </h3>
                     </div>
                 </div>
-                    <div className={`flex flex-wrap gap-4 justify-center ${dark ? dark : 'bgImage2'}  py-3 my-2`}>
+                    <div className='flex flex-wrap gap-4 justify-center dark:bg-gray-700 light:bgImage2 py-3 my-2'>
                         {
                             categories.slice(0, 8).map((val) => {
-                                    return  <Card key={val._id} jobTitle={val.name} totalJobs={val.postCounts} dark={dark} image={'https://www.hiringmine.com/assets/ArtIcon-abc0c65a.svg'} />
+                                    return  <Card key={val._id} jobTitle={val.name} totalJobs={val.postCounts} image={'https://www.hiringmine.com/assets/ArtIcon-abc0c65a.svg'} />
                             })
                         }
 
@@ -123,18 +123,18 @@ export default Sections;
 
 const Button = ({title}) => {
     return(
-        <button type="button" className="py-1.5 px-3 me-2 my-2 text-[14px] font-bold text-[rgb(104,81,255)] focus:outline-none bg-transparent rounded-lg border border-[rgba(104,81,255,0.5)] hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 transition-colors duration-250 ease-out">{title}</button>
+        <button type="button" className= "py-1.5 px-3 me-2 my-2 text-[14px] font-bold text-[rgb(104,81,255)] focus:outline-none bg-transparent rounded-lg border border-[rgba(104,81,255,0.5)] hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 transition-colors duration-250 ease-out">{title}</button>
     )
 }
 
-function Card({jobTitle, image, totalJobs, dark}) {
+function Card({jobTitle, image, totalJobs}) {
     return(
-        <div className={`flex items-center justify-center flex-col min-w-[300px] h-48 p-4 ${dark ? 'bg-slate-900 shadow-md shadow-slate-400' : 'bgImage2' } border border-gray-200 rounded-xl dark:bg-gray-800 dark:border-gray-700`}>
+        <div className='flex items-center justify-center flex-col min-w-[300px] h-48 p-4 shadow-md shadow-slate-400 light:bgImage2 border border-gray-200 rounded-xl dark:bg-gray-800 dark:border-gray-700'>
             <img className="text-[rgb(104,81,255)] py-2 bg-transparent" src={image} alt="" />
             <a href="#">
                 <h5 className="mb-2 text-xl font-bold tracking-tight text-[rgb(104,81,255)] dark:text-white">{jobTitle}</h5>
             </a>
-            <p className="mb-3 font-semibold text-xl text-gray-500 dark:text-gray-400">{totalJobs} Jobs</p>
+            <p className="mb-3 font-semibold text-xl text-gray-500 dark:text-gray-300">{totalJobs} Jobs</p>
         </div>
     )
 }
