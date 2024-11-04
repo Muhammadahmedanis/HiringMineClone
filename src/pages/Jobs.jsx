@@ -50,16 +50,16 @@ function Jobs() {
   return (
     <>
       <Navbar setKeyword={setKeyword} />
-      <div className='pt-[118px] dark:bg-gray-700 h-50 flex justify-center'>
+      <div className='pt-[133px] dark:bg-gray-700 h-50 flex flex-wrap justify-center'>
         {
           filters?.map((val) => {
-            return <MultipleSelectCheckmarks key={val._id} filterName={val.filterationName} filterOptions={val.filterationOptions} /> 
+            return <MultipleSelectCheckmarks key={val._id} setJobsData={setJobsData} filterName={val.filterationName} filterOptions={val.filterationOptions} /> 
           })
         }
       </div>
       <div className='dark:bg-gray-700 text-white bg-white flex flex-wrap justify-center gap-4 px-6 p-2 py-6'>
         {
-            jobsData.data?.map((val) => {
+            jobsData?.data?.map((val) => {
             let time = timeElapsed(val.updatedAt);
             return <Cards type={'jobDetail'} key={val._id} position={val.position} skills={val.skills} desc={val.category.description} email={val.applyEmail} phone={val.applyPhone} jobType={val.jobType} experience={val.experience} companyName={val.companyName} time={time} views={val.views} designation={val.designation} city={val.city} 
             salaryStart={val.payRangeStart} salaryEnd={val.payRangeEnd} width={"600"} />
@@ -83,62 +83,75 @@ const MenuProps = {
   },
 };
 
-const MultipleSelectCheckmarks = ({filterName, filterOptions}) =>  {
+const MultipleSelectCheckmarks = ({ filterName, filterOptions, setJobsData}) => {
   const [personName, setPersonName] = useState([]);
-  // const[categorys, setCategory] = useState();
-  // console.log(categorys);
-  // useEffect(() => {
-  //   const [a] = personName
-  //   if(!a) return;
-  //     const categoryCall = async() => {
-  //       try {
-  //         console.log(a);
-  //         const res = await axios.get(`https://backend-prod.app.hiringmine.com/api/jobAds/all?limit=10&pageNo=1&category=${a}&keyWord=&category=`)
-  //         console.log(res)
-  //       } catch (error) {
-  //         console.log(error);
-  //       }
-  //     }
-  //     categoryCall();
-  //   }, [personName])
   
+  useEffect(() => {
+    // Log the selected items to see `id` and `title`
+    console.log(personName.length && personName);
+    personName.map(async(val) => {
+      try {
+        const res = await axios.get(`https://backend-prod.app.hiringmine.com/api/jobAds/all?limit=10&pageNo=1&category=${val.id}&keyWord=&category=`)
+        setJobsData(res.data)
+        // console.log(res.data)
+      } catch(error) {
+        console.log(error)
+      }
+    })
+    // You can make API calls here if needed based on the selected items
+  }, [personName]);
+
   const handleChange = (event) => {
     const {
-      target:{value },
+      target: { value },
     } = event;
-    const a = value.split(',').map((t) => t);
-    console.log(a);
-    
-    // setPersonName(
-    //   typeof value === 'string' ? value.split(',') : value,
-    // );
+
+    setPersonName((prevSelected) => {
+      if (typeof value === 'string') {
+        // Convert string to array if it's comma-separated
+        value = value.split(',');
+      }
+      // Extract the titles from the current selection
+      const selectedTitles = value.map((val) => val.title);
+
+      // Update the selected items, toggling inclusion based on current state
+      return filterOptions.reduce((acc, item) => {
+        if (selectedTitles.includes(item.title)) {
+          return prevSelected.some((selected) => selected.title === item.title)
+            ? acc.filter((selected) => selected.title !== item.title)
+            : [...acc, { id: item.sluk, title: item.title }];
+        }
+        return acc;
+      }, []);
+    });
   };
-  
+
   return (
     <div>
-      <FormControl sx={{ m: 1, width: 160 }}>
-        <InputLabel className='dark:text-gray-300' id="demo-multiple-checkbox-label">{filterName}</InputLabel>
+      <FormControl sx={{ m: 1, width: 160 }} >
+        <InputLabel className="dark:text-gray-300" id="demo-multiple-checkbox-label">
+          {filterName}
+        </InputLabel>
         <Select
           labelId="demo-multiple-checkbox-label"
           id="demo-multiple-checkbox"
           multiple
-          value={personName}
+          value={personName?.map((item) => item.title)} // Show only titles in the input field
           onChange={handleChange}
           input={<OutlinedInput label="Tag" />}
           renderValue={(selected) => selected.join(', ')}
           MenuProps={MenuProps}
         >
-          {filterOptions.map((name) => (
-            <MenuItem key={name.title} value={name.title}>
-              <Checkbox checked={personName.includes(name.title)} />
-              <ListItemText primary={name.title} />
+          {filterOptions.map((option, ind) => (
+            <MenuItem key={ind} value={option}>
+              <Checkbox checked={personName?.some((item) => item.title === option.title)} />
+              <ListItemText primary={option.title} />
             </MenuItem>
           ))}
-          <div className='text-center'>
-            <Button size='small' variant='contained' sx={{backgroundColor: "rgb(104,81,255)", fontWeight: 700, fontSize: '13px'}}>Show results</Button>
+          <div className="text-center">
           </div>
         </Select>
       </FormControl>
     </div>
   );
-}
+};

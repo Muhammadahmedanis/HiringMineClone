@@ -26,100 +26,6 @@
 //   );
 // };
 
-// function timeElapsed(data) {
-//   const nom = new Date();
-//   const updDate = new Date(data);
-//   const diff = nom - updDate;
-//   const hours = Math.floor(diff / (1000 * 3600)); // Converted to hours instead of days
-//   return hours;
-// }
-
-// function Jobs({ dark }) {
-//   const [jobsData, setJobsData] = useState([]);
-//   const [limit, setLimit] = useState(10); // Start with 10 jobs
-//   const [loading, setLoading] = useState(false); // To track loading state
-//   const [hasMore, setHasMore] = useState(true); // To track if more data is available
-
-//   // Fetch jobs data with the updated limit
-//   const fetchJobs = async (newLimit) => {
-//     setLoading(true);
-//     try {
-//       const res = await fetch(
-//         `https://backend-prod.app.hiringmine.com/api/jobAds/all?limit=${newLimit}&pageNo=1&keyWord=&category=`
-//       );
-//       const data = await res.json();
-
-//       // Check if more jobs are available
-//       if (data.data.length < newLimit) {
-//         setHasMore(false);
-//       }
-
-//       setJobsData((prevJobs) => [...prevJobs, ...data.data]); // Append new jobs
-//     } catch (error) {
-//       console.error(error);
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   // Initial fetch
-//   useEffect(() => {
-//     fetchJobs(limit);
-//   }, [limit]);
-
-//   // Handle scrolling for infinite scroll
-//   useEffect(() => {
-//     const handleScroll = () => {
-//       // Check if the user scrolled to the bottom
-//       if (
-//         window.innerHeight + document.documentElement.scrollTop >=
-//           document.documentElement.offsetHeight - 100 &&
-//         hasMore &&
-//         !loading
-//       ) {
-//         setLimit((prevLimit) => prevLimit + 10); // Increase limit by 10
-//       }
-//     };
-
-//     window.addEventListener("scroll", handleScroll);
-
-//     return () => {
-//       window.removeEventListener("scroll", handleScroll); // Clean up the event listener on component unmount
-//     };
-//   }, [hasMore, loading]);
-
-//   let a = JSON.parse(localStorage.getItem("theme"));
-
-//   return (
-//     <div
-//       className={`${
-//         dark || a ? "bg-slate-900 text-white" : "bg-white"
-//       } flex flex-wrap justify-center gap-4 px-6 pt-28`}
-//     >
-//       {jobsData.map((val, id) => {
-//         let time = timeElapsed(val.updatedAt);
-//         return (
-//           <Cards
-//             key={val._id + id}
-//             companyName={val.companyName}
-//             time={time}
-//             views={val.views}
-//             designation={val.designation}
-//             city={val.city}
-//             salaryStart={val.payRangeStart}
-//             salaryEnd={val.payRangeEnd}
-//             width={"600"}
-//           />
-//         );
-//       })}
-//       {/* {loading && <Loader />} Show loading message */}
-//       {!hasMore && <p>No more jobs available</p>} {/* Message if no more jobs */}
-//     </div>
-//   );
-// }
-
-
-
 import React, { useEffect, useState } from "react";
 import Cards from "./Cards";
 
@@ -130,9 +36,6 @@ function timeElapsed(data){
     const days = Math.floor(diff / (1000 * 3600));
     return days
 }
-
-
-
 
 
 function Jobs({dark}) {
@@ -156,7 +59,7 @@ function Jobs({dark}) {
     let a  = JSON.parse(localStorage.getItem("theme"));
     
     return(
-        <div className={`${dark || a ? 'bg-slate-900 text-white' : 'bg-white'} flex flex-wrap justify-center gap-4 px-6 pt-28`}>
+        <div className='bg-white flex flex-wrap justify-center gap-4 px-6 pt-28'>
             {
                 jobsData.map((val, id) => {
                     let time = timeElapsed(val.updatedAt);

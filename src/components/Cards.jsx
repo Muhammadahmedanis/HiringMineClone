@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-
+import img from '../images/logo.png'
+import useTheme from "../context/ThemeChangerContext";
 function Cards({width, companyName, views, designation, city, salaryStart, salaryEnd, time, position, jobType, experience, desc, email, phone, skills, type}) {
+    const {themeMode} =  useTheme();
+    console.log(themeMode);
     return(
-        <div style={{ width: width ? `${width}px` : '400px' }}  className={'bg-white flex flex-col gap-5 p-5 light:bgImage1 b border border-gray-200 rounded-lg dark:bg-gray-800 dark:text-white dark:border-gray-700'}>
+        <div style={{ width: width ? `${width}px` : '400px' }}  className= {`${themeMode == 'light' ? 'bgImage1' : 'dark:bg-gray-800'} flex flex-col gap-5 p-5 b border border-gray-200 rounded-lg  dark:text-white dark:border-gray-700`}>
             <div className="flex-1">
                 <div className="flex justify-between">
                     <p className="text-[17px] dark:text-gray-400 text-black font-bold">{companyName ? companyName : 'Anonymous'}</p>
-                    <img className="text-[rgb(104,81,255)] h-12" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKnFtZ0QCZX4QjIknoOfHvs5mcRCinDLKkAA&s" alt="" />
+                    <img className="text-[rgb(104,81,255)] h-12" src={img} alt="" />
                 </div>
                 <div>
                      <p className="font-semibold text-[16px] dark:text-gray-400 text-black">{designation}</p>
