@@ -105,15 +105,13 @@ const MultipleSelectCheckmarks = ({ filterName, filterOptions, setJobsData}) => 
     const {
       target: { value },
     } = event;
-
+  
+    const selectedValues = typeof value === 'string' ? value.split(',') : value;
+  
     setPersonName((prevSelected) => {
-      if (typeof value === 'string') {
-        // Convert string to array if it's comma-separated
-        value = value.split(',');
-      }
       // Extract the titles from the current selection
-      const selectedTitles = value.map((val) => val.title);
-
+      const selectedTitles = selectedValues.map((val) => val.title);
+  
       // Update the selected items, toggling inclusion based on current state
       return filterOptions.reduce((acc, item) => {
         if (selectedTitles.includes(item.title)) {
@@ -125,6 +123,7 @@ const MultipleSelectCheckmarks = ({ filterName, filterOptions, setJobsData}) => 
       }, []);
     });
   };
+  
 
   return (
     <div>
